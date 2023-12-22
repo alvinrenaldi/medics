@@ -12,6 +12,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.Map;
+import java.util.HashMap;
+import com.google.firebase.firestore.FirebaseFirestore;
+import android.util.Log;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -99,7 +104,9 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Pendaftaran berhasil, tampilkan dialog konfirmasi
+                        // Pendaftaran berhasil, simpan data pengguna ke Firestore
+                        saveUserToFirestore(email);
+                        // Tampilkan dialog konfirmasi
                         showSignUpSuccessDialog();
                     } else {
                         // Jika pendaftaran gagal, tampilkan pesan ke pengguna
@@ -122,6 +129,29 @@ public class SignUpActivity extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    private void saveUserToFirestore(String email) {
+        // Dapatkan ID pengguna yang baru terdaftar
+        String userId = mAuth.getCurrentUser().getUid();
+        // Buat objek Map untuk menyimpan data pengguna
+        Map<String, Object> user = new HashMap<>();
+        user.put("name", nameEditText.getText().toString());
+        user.put("email", email);
+        user.put("password", passwordEditText.getText().toString()); // Storing passwords in plaintext is not secure
+
+        // Dapatkan instance Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Tambahkan dokumen baru dengan ID pengguna ke koleksi 'users'
+        db.collection("users").document(userId).set(user)
+                .addOnSuccessListener(aVoid -> {
+                    // Data pengguna berhasil disimpan
+                    Log.d("SignUpActivity", "DocumentSnapshot successfully written!");
+                })
+                .addOnFailureListener(e -> {
+                    // Gagal menyimpan data pengguna
+                    Log.w("SignUpActivity", "Error writing document", e);
+                });
     }
 
 }
