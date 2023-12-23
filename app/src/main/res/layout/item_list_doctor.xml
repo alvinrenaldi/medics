@@ -15,7 +15,7 @@
         tools:srcCompat="@tools:sample/avatars"/>
 
     <TextView
-        android:id="@+id/drirwan"
+        android:id="@+id/drname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/imgdokter"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="12dp"
         android:text="Rs. Ibnu Sina Padang"
         android:textSize="20sp"
-        android:layout_below="@id/drirwan"/>
+        android:layout_below="@id/drname"/>
 
     <Button
         android:id="@+id/btnPesan"

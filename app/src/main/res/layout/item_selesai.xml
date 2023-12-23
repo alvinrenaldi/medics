@@ -19,12 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:text="@string/dr_irwan_gu"
             android:textAppearance="@style/dr_irwan_gu"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/avatar"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginTop="20dp"

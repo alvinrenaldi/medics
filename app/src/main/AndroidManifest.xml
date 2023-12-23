@@ -41,6 +41,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".ListDoctorActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>
