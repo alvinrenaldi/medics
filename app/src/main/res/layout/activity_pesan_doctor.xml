@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_media_previous"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="back button" />
+
     <TextView
         android:id="@+id/textPemesanan"
         android:layout_width="wrap_content"
@@ -102,28 +111,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="37dp"
+        android:layout_width="0dp"
         android:layout_height="21dp"
         android:layout_gravity="center"
-        android:layout_marginStart="24dp"
+        android:textAlignment="center"
         android:layout_marginTop="16dp"
         android:text="Mon"
         android:textColor="#000000"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView1"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView1"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="60dp"
+        android:id="@+id/tanggal1"
+        android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginStart="28dp"
+        android:textAlignment="center"
         android:layout_marginTop="44dp"
-        android:text="22"
+        android:text=""
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView1"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView1"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <View
@@ -137,28 +149,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="49dp"
-        android:layout_height="30dp"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
         android:layout_gravity="center"
-        android:layout_marginStart="92dp"
+        android:textAlignment="center"
         android:layout_marginTop="16dp"
-        android:text="Tues"
+        android:text="Tue"
         android:textColor="#000000"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView2"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView2"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="60dp"
+        android:id="@+id/tanggal2"
+        android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginStart="100dp"
+        android:textAlignment="center"
         android:layout_marginTop="44dp"
-        android:text="23"
+        android:text=""
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView2"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView2"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <View
@@ -172,28 +187,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="52dp"
-        android:layout_height="30dp"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
         android:layout_gravity="center"
-        android:layout_marginStart="168dp"
+        android:textAlignment="center"
         android:layout_marginTop="16dp"
         android:text="Wed"
         android:textColor="#000000"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView3"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView3"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="60dp"
+        android:id="@+id/tanggal3"
+        android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginStart="172dp"
+        android:textAlignment="center"
         android:layout_marginTop="44dp"
-        android:text="24"
+        android:text=""
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView3"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView3"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <View
@@ -207,28 +225,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="35dp"
-        android:layout_height="28dp"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
         android:layout_gravity="center"
-        android:layout_marginStart="240dp"
+        android:textAlignment="center"
         android:layout_marginTop="16dp"
         android:text="Thu"
         android:textColor="#000000"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView4"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView4"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="60dp"
+        android:id="@+id/tanggal4"
+        android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginStart="244dp"
+        android:textAlignment="center"
         android:layout_marginTop="44dp"
-        android:text="25"
+        android:text=""
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView4"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView4"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <View
@@ -242,28 +263,31 @@
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="35dp"
-        android:layout_height="28dp"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
         android:layout_gravity="center"
-        android:layout_marginStart="312dp"
+        android:textAlignment="center"
         android:layout_marginTop="16dp"
         android:text="Fri"
         android:textColor="#000000"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView5"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView5"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <TextView
-        android:layout_width="60dp"
+        android:id="@+id/tanggal5"
+        android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginStart="316dp"
+        android:textAlignment="center"
         android:layout_marginTop="44dp"
-        android:text="26"
+        android:text=""
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shapeView5"
+        app:layout_constraintEnd_toEndOf="@+id/shapeView5"
         app:layout_constraintTop_toBottomOf="@+id/textPilihJadwal" />
 
     <View

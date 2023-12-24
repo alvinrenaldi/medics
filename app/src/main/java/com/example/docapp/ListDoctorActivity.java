@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Button;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,10 +52,11 @@ public class ListDoctorActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         doctorList.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            String id = document.getId();
                             String avatar = document.getString("avatar");
                             String nama = document.getString("nama");
-                            String profil = document.getString("profil");
-                            Doctor doctor = new Doctor(avatar, nama, profil);
+                            String hospital = document.getString("hospital");
+                            Doctor doctor = new Doctor(id, avatar, nama, hospital);
                             doctorList.add(doctor);
                         }
                         adapter.notifyDataSetChanged();
@@ -63,22 +66,27 @@ public class ListDoctorActivity extends AppCompatActivity {
                 });
     }
 
+
     private class Doctor {
+        private String id;
         private String avatar;
         private String nama;
-        private String profil;
+        private String hospital;
 
-        public Doctor(String avatar, String nama, String profil) {
+        public Doctor(String id, String avatar, String nama, String hospital) {
+            this.id = id;
             this.avatar = avatar;
             this.nama = nama;
-            this.profil = profil;
+            this.hospital = hospital;
         }
 
         // getters
+        public String getId() { return id; }
         public String getAvatar() { return avatar; }
         public String getNama() { return nama; }
-        public String getProfil() { return profil; }
+        public String getHospital() { return hospital; }
     }
+
 
     private class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DoctorViewHolder> {
         private List<Doctor> doctorList;
@@ -99,8 +107,17 @@ public class ListDoctorActivity extends AppCompatActivity {
             Doctor doctor = doctorList.get(position);
             Glide.with(ListDoctorActivity.this).load(doctor.getAvatar()).into(holder.imgdokter);
             holder.drname.setText(doctor.getNama());
-            holder.desc.setText(doctor.getProfil());
+            holder.desc.setText(doctor.getHospital());
+
+            Button btnPesan = holder.itemView.findViewById(R.id.btnPesan);
+            btnPesan.setOnClickListener(v -> {
+                Log.e("ListDoctor", "Dokter ID: "+ doctor.getId());
+                Intent intent = new Intent(ListDoctorActivity.this, DoctorDetailActivity.class);
+                intent.putExtra("idDokter", doctor.getId());
+                startActivity(intent);
+            });
         }
+
 
         @Override
         public int getItemCount() {
