@@ -51,6 +51,31 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".MassaIndexActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ForgotPasswordEmailActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ForgotPasswordOTPActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ForgotPasswordResetActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>

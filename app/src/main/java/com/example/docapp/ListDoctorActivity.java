@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
@@ -41,6 +42,14 @@ public class ListDoctorActivity extends AppCompatActivity {
         doctorList = new ArrayList<>();
         adapter = new DoctorAdapter(doctorList);
         rDokter.setAdapter(adapter);
+
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         loadDoctors();
     }

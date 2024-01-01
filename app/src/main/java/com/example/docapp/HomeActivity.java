@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,6 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import android.widget.Toast;
+import java.util.Map;
+import java.util.HashMap;
+
 
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView rvDikonfirmasi;
@@ -37,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView dijadwalkanTextView;
     private TextView selesaiTextView;
     private TextView dibatalkanTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,12 @@ public class HomeActivity extends AppCompatActivity {
         Button cariListDokterButton = findViewById(R.id.cari_listdokter);
         cariListDokterButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ListDoctorActivity.class);
+            startActivity(intent);
+        });
+
+        Button massaIndexButton = findViewById(R.id.masa_index);
+        massaIndexButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MassaIndexActivity.class);
             startActivity(intent);
         });
 
@@ -97,6 +109,18 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.action_home) {
+                // Item Home yang aktif
+                return true;
+            } else if (item.getItemId() == R.id.action_profile) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                finish(); // Akhiri HomeActivity jika pindah ke ProfileActivity
+                return true;
+            }
+            return false;
+        });
 
 
     }
@@ -121,8 +145,9 @@ public class HomeActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String userId = document.getString("userId");
                             String doctorId = document.getString("doctorId");
+                            String id = document.getString("id");
                             Timestamp date = document.getTimestamp("date");
-                            Booking booking = new Booking(userId, doctorId, date);
+                            Booking booking = new Booking(userId, doctorId, date, id);
                             bookingList.add(booking);
                         }
                         int layoutId = status.equals("book") ? R.layout.item_dijadwalkan : status.equals("finish") ? R.layout.item_selesai : R.layout.item_dibatalkan;
@@ -137,17 +162,20 @@ public class HomeActivity extends AppCompatActivity {
     private class Booking {
         private String userId;
         private String doctorId;
+        private String id;
         private Timestamp date;
 
-        public Booking(String userId, String doctorId, Timestamp date) {
+        public Booking(String userId, String doctorId, Timestamp date, String id) {
             this.userId = userId;
             this.doctorId = doctorId;
+            this.id = id;
             this.date = date;
         }
 
         // getters and setters
         public String getUserId() { return userId; }
         public String getDoctorId() { return doctorId; }
+        public String getId() { return id; }
         public Timestamp getDate() { return date; }
     }
 
@@ -167,6 +195,7 @@ public class HomeActivity extends AppCompatActivity {
             return new BookingViewHolder(view);
         }
 
+
         @Override
         public void onBindViewHolder(@NonNull BookingViewHolder holder, int position) {
             Booking booking = bookingList.get(position);
@@ -183,6 +212,51 @@ public class HomeActivity extends AppCompatActivity {
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm 'WIB'", Locale.getDefault());
                         holder.tanggalDijadwalkan.setText(dateFormat.format(booking.getDate().toDate()));
                         holder.jamDijadwalkan.setText(timeFormat.format(booking.getDate().toDate()));
+
+                        // If layoutId is item_dijadwalkan, find the button and set its onClickListener
+                        if (layoutId == R.layout.item_dijadwalkan) {
+                            Button batalkanButton = holder.itemView.findViewById(R.id.batalkan);
+                            batalkanButton.setOnClickListener(v -> {
+                                // Ensure the document ID is not null
+                                String documentId = booking.getId(); // Assuming the booking ID is the document ID, adjust accordingly
+                                Log.d("HomeActivity", "Cancelling document: " + documentId);
+                                if (documentId != null) {
+                                    // Update the document in Firestore to set the status to "cancel"
+                                    Map<String, Object> updateData = new HashMap<>();
+                                    updateData.put("status", "cancel");
+
+                                    db.collection("books").document(documentId)
+                                            .update(updateData)
+                                            .addOnSuccessListener(aVoid -> {
+                                                // Show an alert that the booking has been cancelled
+                                                Toast.makeText(HomeActivity.this, "Pesanan telah dibatalkan", Toast.LENGTH_SHORT).show();
+                                                // Reload the bookings
+                                                loadBookings("book");
+                                            })
+                                            .addOnFailureListener(e -> Log.d("HomeActivity", "Error updating document: " + documentId, e));
+                                } else {
+                                    // Handle the case where the document ID is null
+                                    Toast.makeText(HomeActivity.this, "Error: Document ID is null", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            Button pesanLagiButton = holder.itemView.findViewById(R.id.ganti_jadwal);
+                            pesanLagiButton.setOnClickListener(v -> {
+                                Intent intent = new Intent(HomeActivity.this, DoctorDetailActivity.class);
+                                intent.putExtra("idDokter", booking.getDoctorId());
+                                intent.putExtra("dokumentId", booking.getId());
+                                startActivity(intent);
+                            });
+                        }
+
+                        else if (layoutId == R.layout.item_selesai || layoutId == R.layout.item_dibatalkan) {
+                            Button gantiJadwalButton = holder.itemView.findViewById(R.id.ganti_jadwal);
+                            gantiJadwalButton.setOnClickListener(v -> {
+                                Intent intent = new Intent(HomeActivity.this, DoctorDetailActivity.class);
+                                intent.putExtra("idDokter", booking.getDoctorId());
+                                startActivity(intent);
+                            });
+                        }
                     })
                     .addOnFailureListener(e -> Log.d("HomeActivity", "Error getting doctor data: ", e));
         }
