@@ -76,6 +76,36 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".HomeDoctorActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ProfileDoctorActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".ChooseRoleActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".LoginDoctorActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".SignUpDoctorActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>

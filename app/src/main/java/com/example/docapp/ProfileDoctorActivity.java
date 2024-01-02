@@ -25,7 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileDoctorActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_doctor);
 
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView.getMenu().findItem(R.id.action_profile).setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_home) {
-                startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
+                startActivity(new Intent(ProfileDoctorActivity.this, HomeDoctorActivity.class));
                 return true;
             } else if (item.getItemId() == R.id.action_profile) {
                 return true;
@@ -56,20 +56,20 @@ public class ProfileActivity extends AppCompatActivity {
 
         TextView changePassButton = findViewById(R.id.gantisandi);
         changePassButton.setOnClickListener(item -> {
-            startActivity(new Intent(ProfileActivity.this, ForgotPasswordResetActivity.class));
+            startActivity(new Intent(ProfileDoctorActivity.this, ForgotPasswordResetActivity.class));
         });
 
         TextView keluarTextView = findViewById(R.id.keluar);
         keluarTextView.setOnClickListener(view -> {
             // Menampilkan alert
-            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileDoctorActivity.this);
             builder.setMessage("Apakah Anda yakin ingin keluar?")
                     .setPositiveButton("Ya", (dialog, which) -> {
                         // Logout user
                         mAuth.signOut();
 
                         // Pindah ke LoginActivity
-                        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                        startActivity(new Intent(ProfileDoctorActivity.this, LoginActivity.class));
                         finish(); // Menutup activity saat ini
                     })
                     .setNegativeButton("Tidak", (dialog, which) -> {
@@ -92,13 +92,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void retrieveUserData() {
-        mFirestore.collection("users").document(currentUserId).get()
+        mFirestore.collection("doctors").document(currentUserId).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             // Mendapatkan data dari Firestore
-                            String nama = document.getString("name");
+                            String nama = document.getString("nama");
                             String avatarUrl = document.getString("avatar");
                             Log.d("Profile", "Nama: "+nama);
                             // Menampilkan data pada komponen dengan id usernameTextView
@@ -107,7 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             // Menampilkan gambar menggunakan Glide pada ImageView dengan id imgDrlaki
                             ImageView imgDrlaki = findViewById(R.id.imgDrlaki);
-                            Glide.with(ProfileActivity.this)
+                            Glide.with(ProfileDoctorActivity.this)
                                     .load(avatarUrl)
                                     .into(imgDrlaki);
                         }
@@ -155,23 +155,23 @@ public class ProfileActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Menangani kegagalan unggah
-                    Toast.makeText(ProfileActivity.this, "Gagal mengunggah gambarrr.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileDoctorActivity.this, "Gagal mengunggah gambarrr.", Toast.LENGTH_SHORT).show();
                     Log.e("Profile", "Errorrr: "+ e);
                 });
     }
 
     private void updateAvatarInFirestore(String imageUrl) {
         // Mengupdate field avatar di Firestore
-        mFirestore.collection("users").document(currentUserId)
+        mFirestore.collection("doctors").document(currentUserId)
                 .update("avatar", imageUrl)
                 .addOnSuccessListener(aVoid -> {
                     // Menangani keberhasilan update
-                    Toast.makeText(ProfileActivity.this, "Gambar profil berhasil diupdate.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileDoctorActivity.this, "Gambar profil berhasil diupdate.", Toast.LENGTH_SHORT).show();
                     retrieveUserData(); // Memperbarui tampilan dengan data terbaru
                 })
                 .addOnFailureListener(e -> {
                     // Menangani kegagalan update
-                    Toast.makeText(ProfileActivity.this, "Gagal mengupdate avatar.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileDoctorActivity.this, "Gagal mengupdate avatar.", Toast.LENGTH_SHORT).show();
                 });
     }
 }

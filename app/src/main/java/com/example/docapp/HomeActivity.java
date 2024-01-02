@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.graphics.Typeface;
@@ -62,6 +63,12 @@ public class HomeActivity extends AppCompatActivity {
         Button cariListDokterButton = findViewById(R.id.cari_listdokter);
         cariListDokterButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ListDoctorActivity.class);
+            startActivity(intent);
+        });
+
+        ImageButton notificationButton = findViewById(R.id.notification);
+        notificationButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, NotificationActivity.class);
             startActivity(intent);
         });
 

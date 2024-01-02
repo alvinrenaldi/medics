@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         int SPLASH_DISPLAY_LENGTH = 2000; // Splash screen duration in milliseconds
         new Handler().postDelayed(() -> {
             // After the splash screen duration, start the OnboardingActivity
-            Intent onboardingIntent = new Intent(MainActivity.this, OnboardingActivity.class);
+            Intent onboardingIntent = new Intent(MainActivity.this, ChooseRoleActivity.class);
             startActivity(onboardingIntent);
             finish(); // Close the splash screen activity
         }, SPLASH_DISPLAY_LENGTH);

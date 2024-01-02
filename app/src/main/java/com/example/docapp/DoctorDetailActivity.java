@@ -299,6 +299,7 @@ public class DoctorDetailActivity extends AppCompatActivity {
         booking.put("doctorId", idDokter);
         booking.put("userId", userId);
         booking.put("status", "book");
+        booking.put("confirmation", false);
 
         // Parse the selectedTime into hours and minutes
         String[] timeParts = selectedTime.split(":");

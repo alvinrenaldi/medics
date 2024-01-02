@@ -17,23 +17,26 @@ import java.util.HashMap;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.util.Log;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpDoctorActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private TextInputEditText nameEditText, emailEditText, passwordEditText;
+    private TextInputEditText nameEditText, emailEditText, passwordEditText, strEditText, profileEditText, rumahSakitEditText;
     private CheckBox termsCheckBox;
     private MaterialButton signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register); // Ganti dengan layout sign up Anda
+        setContentView(R.layout.activity_register_doctor); // Ganti dengan layout sign up Anda
 
         // Inisialisasi instance FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
         // Inisialisasi views
         nameEditText = findViewById(R.id.nameEditText);
+        strEditText = findViewById(R.id.strEditText);
+        profileEditText = findViewById(R.id.profileEditText);
+        rumahSakitEditText = findViewById(R.id.rumahSakitEditText);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         termsCheckBox = findViewById(R.id.termsCheckBox);
@@ -46,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Memulai LoginActivity
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SignUpDoctorActivity.this, LoginDoctorActivity.class);
                 startActivity(intent);
             }
         });
@@ -73,6 +76,27 @@ public class SignUpActivity extends AppCompatActivity {
             valid = false;
         } else {
             nameEditText.setError(null);
+        }
+
+        if (strEditText.getText().toString().isEmpty() || strEditText.getText().length() < 6) {
+            strEditText.setError("Masukan STR.");
+            valid = false;
+        } else {
+            strEditText.setError(null);
+        }
+
+        if (profileEditText.getText().toString().isEmpty() || profileEditText.getText().length() < 6) {
+            profileEditText.setError("Masukan Profile.");
+            valid = false;
+        } else {
+            profileEditText.setError(null);
+        }
+
+        if (rumahSakitEditText.getText().toString().isEmpty() || rumahSakitEditText.getText().length() < 6) {
+            rumahSakitEditText.setError("Masukan Rumah Sakit.");
+            valid = false;
+        } else {
+            rumahSakitEditText.setError(null);
         }
 
         // Cek apakah email diisi
@@ -110,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
                         showSignUpSuccessDialog();
                     } else {
                         // Jika pendaftaran gagal, tampilkan pesan ke pengguna
-                        Toast.makeText(SignUpActivity.this, "Pendaftaran gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpDoctorActivity.this, "Pendaftaran gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -122,7 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
                 .setPositiveButton("Masuk", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // User memilih "Masuk", navigasi ke LoginActivity
-                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(SignUpDoctorActivity.this, LoginDoctorActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -140,11 +164,14 @@ public class SignUpActivity extends AppCompatActivity {
         user.put("email", email);
         user.put("avatar", "https://firebasestorage.googleapis.com/v0/b/docapp-45843.appspot.com/o/profile%2Fprofile_4945750.png?alt=media&token=e8c089c5-f0b0-478d-bc80-c295dacbadce");
         user.put("password", passwordEditText.getText().toString()); // Storing passwords in plaintext is not secure
+        user.put("str", strEditText.getText().toString());
+        user.put("profil", profileEditText.getText().toString());
+        user.put("hospital", rumahSakitEditText.getText().toString());
 
         // Dapatkan instance Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Tambahkan dokumen baru dengan ID pengguna ke koleksi 'users'
-        db.collection("users").document(userId).set(user)
+        db.collection("doctors").document(userId).set(user)
                 .addOnSuccessListener(aVoid -> {
                     // Data pengguna berhasil disimpan
                     Log.d("SignUpActivity", "DocumentSnapshot successfully written!");
