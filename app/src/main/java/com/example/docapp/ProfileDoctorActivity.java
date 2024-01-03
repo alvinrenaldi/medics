@@ -69,7 +69,7 @@ public class ProfileDoctorActivity extends AppCompatActivity {
                         mAuth.signOut();
 
                         // Pindah ke LoginActivity
-                        startActivity(new Intent(ProfileDoctorActivity.this, LoginActivity.class));
+                        startActivity(new Intent(ProfileDoctorActivity.this, LoginDoctorActivity.class));
                         finish(); // Menutup activity saat ini
                     })
                     .setNegativeButton("Tidak", (dialog, which) -> {

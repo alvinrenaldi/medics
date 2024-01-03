@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.graphics.Typeface;
@@ -122,6 +123,12 @@ public class HomeDoctorActivity extends AppCompatActivity {
                 return true;
             }
             return false;
+        });
+
+        Button AddScheduleButton = findViewById(R.id.button_tambahkanjadwal);
+        AddScheduleButton.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeDoctorActivity.this, AddScheduleActivity.class);
+            startActivity(intent);
         });
     }
 

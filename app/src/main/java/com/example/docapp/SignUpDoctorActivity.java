@@ -160,7 +160,7 @@ public class SignUpDoctorActivity extends AppCompatActivity {
         String userId = mAuth.getCurrentUser().getUid();
         // Buat objek Map untuk menyimpan data pengguna
         Map<String, Object> user = new HashMap<>();
-        user.put("name", nameEditText.getText().toString());
+        user.put("nama", nameEditText.getText().toString());
         user.put("email", email);
         user.put("avatar", "https://firebasestorage.googleapis.com/v0/b/docapp-45843.appspot.com/o/profile%2Fprofile_4945750.png?alt=media&token=e8c089c5-f0b0-478d-bc80-c295dacbadce");
         user.put("password", passwordEditText.getText().toString()); // Storing passwords in plaintext is not secure

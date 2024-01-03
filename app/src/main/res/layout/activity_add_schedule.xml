@@ -53,6 +53,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textwaktu"/>
 
     <TextView
+        android:id="@+id/hapusSemua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Hapus Semua Jadwal"
+        android:layout_marginRight="20dp"
+        android:textSize="15sp"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/textwaktu"/>
+
+    <TextView
         android:id="@+id/textwed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
